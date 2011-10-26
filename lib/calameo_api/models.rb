@@ -28,6 +28,7 @@ module Calameo
   
   class Publishing
     include Calameo::Base
+    api_url Api::UPLOAD_API_URL
     api_method :publish, :post                    #http://www.calameo.com/documentation/api/api-publish.htm
     api_method :publishFromUrl, :post             #http://www.calameo.com/documentation/api/api-publishfromurl.htm
     api_method :publishFromText, :post            #http://www.calameo.com/documentation/api/api-publishfromtext.htm
