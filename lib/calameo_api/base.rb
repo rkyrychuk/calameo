@@ -4,13 +4,13 @@ module Calameo
     module ClassMethods
       include Calameo::Request
       include Calameo::Api
-      @@api_url = Api::COMMON_API_URL
-      def api_url(api_url)
-        @@api_url = api_url
-      end
-      def api_method(name, type = :get, api_url = nil)
+      
+      def api_method(name, type = :get, api_url, response_type)
         define_singleton_method name do |params = {}|
-          api_call api_url || @@api_url, type, "API.#{name}", params
+          hash = api_call api_url, type, "API.#{name}", params
+          return response_type.create hash if response_type.is_a?(Items::ResponseObject)
+          return nil if response_type.is_a?(Nil)
+          raise 'Unknown return type in configuration'
         end
       end
     end

@@ -1,5 +1,5 @@
 require 'digest/md5'
-require "ostruct"
+
 
 module Calameo
   class ApiException < StandardError
@@ -52,7 +52,7 @@ module Calameo
     end
     # Convert hash values to openstruct
     def convert_hash(hash)
-      OpenStruct.new Hash[hash.map { |k, v|  [k.underscore, convert_value(v)] }]
+      Hash[hash.map { |k, v|  [k.underscore, convert_value(v)] }]
     end
     # Convert value to openstruct
     def convert_value(value)

@@ -3,6 +3,7 @@ require "calameo_api/version"
 require "calameo_api/request"
 require "calameo_api/api"
 require "calameo_api/base"
+require "calameo_api/items"
 require "calameo_api/models"
 
 #http://www.calameo.com/documentation/api/
