@@ -1,33 +1,32 @@
 require 'ostruct'
 module Calameo
   module Items
+    # Response Object
     class ResponseObject < OpenStruct
       @@defs = {}
       def self.attr_accessor(name, type = nil)
         @@defs[self] ||= {}
-        @@defs[self][name] = type
+        @@defs[self][name] = type if type
       end
     
       def initialize(hash = nil)
-        for k,v in hash
+       hash = Hash[hash.map do |k, v|
           type = @@defs[self.class][k.to_sym]
-          hash[k] = type ? type.new(v) : v
-        end if hash
+          if type
+            v = v.map {|item| type.new(item) } if v.is_a?(Array)
+            v = type.new(v) if v.is_a?(Hash)
+          end
+          [k, v]
+        end] if hash
         super hash
       end
     end
-    
+    # Response collection object
     class ResponseCollectionObject < ResponseObject
       attr_accessor :total
       attr_accessor :start
       attr_accessor :step
       attr_accessor :items
-      
-      def initialize(hash)
-        super hash
-        item_type = @@defs[self][:items]
-        self.items = self.items.map {|item| item_type.new(item) }
-      end
     end
     # Account Info
     class AccountInfo < ResponseObject

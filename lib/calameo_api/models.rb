@@ -216,12 +216,177 @@ module Calameo
   class Publishing
     include Calameo::Base
     
-#    api_method :publish, :post                    #http://www.calameo.com/documentation/api/api-publish.htm
-#    api_method :publishFromUrl, :post             #http://www.calameo.com/documentation/api/api-publishfromurl.htm
-#    api_method :publishFromText, :post            #http://www.calameo.com/documentation/api/api-publishfromtext.htm
-#    api_method :revise                            #http://www.calameo.com/documentation/api/api-revise.htm
-#    api_method :reviseFromUrl                     #http://www.calameo.com/documentation/api/api-revisefromurl.htm
-#    api_method :reviseFromText                    #http://www.calameo.com/documentation/api/api-revisefromtext.htm
+    # This action allows you to publish a document.
+    #
+    # @param file     options[:file]            Document to be uploaded (like provided by a HTML form file field).
+    # @param integer  options[:subscription_id] ID of the subscription.
+    # @param string   options[:category]        Category reference.
+    # @param string   options[:format]          Format reference.
+    # @param string   options[:dialect]         Language reference
+    # 
+    # @param string  options[:name]             Title of the publication. If not present, the filename will be used.
+    # @param string  options[:description]      Description of the publication. If not present, the first page's text will be used.
+    # @param date    options[:date]             Date of the publication for DRM management.
+    # @param boolean options[:is_published]     Activation status. Either 0 (disabled) or 1 (enabled).
+    # @param integer options[:publishing_mode] 	Access to the publication. Either 1 (public) or 2 (private).
+    # @param boolean options[:private_url]      Use a private URL. Either 0 (disabled) or 1 (enabled).
+    # 
+    # @param integer options[:view]             Default view ing mode. Either book, slide, bookindex or slideindex.
+    # @param integer options[:subscribe]        Allow subscribers' access. Either 0 (disabled) or 1 (enabled).
+    # @param integer options[:comment]          Comments behaviour. Either 0 (disabled), 1 (moderate all), 2 (moderate all except contacts), 3 (accept only contacts) or 4 (accept all).
+    # @param integer options[:download]         Download behaviour. Either 0 (disabled), 1 (only contacts) or 2 (everyone).
+    # @param integer options[:print]            Print behaviour. Either 0 (disabled), 1 (only contacts) or 2 (everyone).
+    # @param integer options[:annotation_view]  Annotation viewing behaviour. Either 0 (disabled), 1 (only contacts) or 2 (everyone).
+    # @param integer options[:annotation_add]   Annotation adding behaviour. Either 0 (disabled), 1 (only contacts) or 2 (everyone).
+    # @param integer options[:extract]          not yet implemented.
+    # @param integer options[:mini]             Allow MiniCalaméo. Either 0 (disabled) or 1 (enabled).
+    # @param integer options[:adult]            Restrict access to adults. Either 0 (no) or 1 (yes).
+    # @param integer options[:direction]        Reading direction. Either 0 (left-to-right) or 1 (right-to-left "manga mode").
+    # 
+    # @param string  options[:license]          License. Either <empty> (traditionnal copyright) or pd (public domain), by, by_nc, by_nc_nd, by_nc_sa, by_nd or by_sa (Creative Commons).
+    # @param string  options[:skin_url]         Custom skin URL Must be an absolute URL. (see CSML documentation)
+    # @param string  options[:logo_url]         Custom logo URL. Must be an absolute URL.
+    # @param string  options[:logo_link_url]    Custom logo link URL. Must be an absolute URL.
+    # @param string  options[:background_url]   Custom background URL. Must be an absolute URL.
+    # @param integer options[:music]            Background music mode. Either 0 (loop forever), 1 (play only once).
+    # @param string  options[:music_url]        Custom background music URL. Must be an absolute URL.
+    # @param integer options[:sfx]              Play sound effects like page flipping. Either 0 (disabled) or 1 (enabled).
+    # @param string  options[:sfx_url]          Custom page flipping sound URL. Must be an absolute URL.
+    # 
+    # @return [Publication]
+    # 
+    # @see http://www.calameo.com/documentation/skins/index.htm
+    # @see http://www.calameo.com/documentation/api/item-categories.htm
+    # @see http://www.calameo.com/documentation/api/item-formats.htm
+    # @see http://www.calameo.com/documentation/api/item-dialects.htm
+    # @see http://www.calameo.com/documentation/api/api-publish.htm
+    # Calameo::Publishing.publish
+    api_method :publish, :post, Api::UPLOAD_API_URL, Items::Publication
+
+    
+    # This action allows you to publish a document directly from the URL on Internet.
+    #
+    # @param string   options[:url]             URL of the document to publish.
+    # @param integer  options[:subscription_id] ID of the subscription.
+    # @param string   options[:category]        Category reference.
+    # @param string   options[:format]          Format reference.
+    # @param string   options[:dialect]         Language reference
+    # 
+    # @param string  options[:name]             Title of the publication. If not present, the filename will be used.
+    # @param string  options[:description]      Description of the publication. If not present, the first page's text will be used.
+    # @param date    options[:date]             Date of the publication for DRM management.
+    # @param boolean options[:is_published]     Activation status. Either 0 (disabled) or 1 (enabled).
+    # @param integer options[:publishing_mode] 	Access to the publication. Either 1 (public) or 2 (private).
+    # @param boolean options[:private_url]      Use a private URL. Either 0 (disabled) or 1 (enabled).
+    # 
+    # @param integer options[:view]             Default view ing mode. Either book, slide, bookindex or slideindex.
+    # @param integer options[:subscribe]        Allow subscribers' access. Either 0 (disabled) or 1 (enabled).
+    # @param integer options[:comment]          Comments behaviour. Either 0 (disabled), 1 (moderate all), 2 (moderate all except contacts), 3 (accept only contacts) or 4 (accept all).
+    # @param integer options[:download]         Download behaviour. Either 0 (disabled), 1 (only contacts) or 2 (everyone).
+    # @param integer options[:print]            Print behaviour. Either 0 (disabled), 1 (only contacts) or 2 (everyone).
+    # @param integer options[:annotation_view]  Annotation viewing behaviour. Either 0 (disabled), 1 (only contacts) or 2 (everyone).
+    # @param integer options[:annotation_add]   Annotation adding behaviour. Either 0 (disabled), 1 (only contacts) or 2 (everyone).
+    # @param integer options[:extract]          not yet implemented.
+    # @param integer options[:mini]             Allow MiniCalaméo. Either 0 (disabled) or 1 (enabled).
+    # @param integer options[:adult]            Restrict access to adults. Either 0 (no) or 1 (yes).
+    # @param integer options[:direction]        Reading direction. Either 0 (left-to-right) or 1 (right-to-left "manga mode").
+    # 
+    # @param string  options[:license]          License. Either <empty> (traditionnal copyright) or pd (public domain), by, by_nc, by_nc_nd, by_nc_sa, by_nd or by_sa (Creative Commons).
+    # @param string  options[:skin_url]         Custom skin URL Must be an absolute URL. (see CSML documentation)
+    # @param string  options[:logo_url]         Custom logo URL. Must be an absolute URL.
+    # @param string  options[:logo_link_url]    Custom logo link URL. Must be an absolute URL.
+    # @param string  options[:background_url]   Custom background URL. Must be an absolute URL.
+    # @param integer options[:music]            Background music mode. Either 0 (loop forever), 1 (play only once).
+    # @param string  options[:music_url]        Custom background music URL. Must be an absolute URL.
+    # @param integer options[:sfx]              Play sound effects like page flipping. Either 0 (disabled) or 1 (enabled).
+    # @param string  options[:sfx_url]          Custom page flipping sound URL. Must be an absolute URL.
+    # 
+    # @return [Publication]
+    # 
+    # @see http://www.calameo.com/documentation/skins/index.htm
+    # @see http://www.calameo.com/documentation/api/item-categories.htm
+    # @see http://www.calameo.com/documentation/api/item-formats.htm
+    # @see http://www.calameo.com/documentation/api/item-dialects.htm
+    # @see http://www.calameo.com/documentation/api/api-publishfromurl.htm
+    # Calameo::Publishing.publishFromUrl
+    api_method :publishFromUrl, :post, Api::UPLOAD_API_URL, Items::Publication
+    
+    # This action allows you to publish a document directly from the URL on Internet.
+    #
+    # @param string   options[:url]             URL of the document to publish.
+    # @param integer  options[:subscription_id] ID of the subscription.
+    # @param string   options[:category]        Category reference.
+    # @param string   options[:format]          Format reference.
+    # @param string   options[:dialect]         Language reference
+    # 
+    # @param string  options[:name]             Title of the publication. If not present, the filename will be used.
+    # @param string  options[:description]      Description of the publication. If not present, the first page's text will be used.
+    # @param date    options[:date]             Date of the publication for DRM management.
+    # @param boolean options[:is_published]     Activation status. Either 0 (disabled) or 1 (enabled).
+    # @param integer options[:publishing_mode] 	Access to the publication. Either 1 (public) or 2 (private).
+    # @param boolean options[:private_url]      Use a private URL. Either 0 (disabled) or 1 (enabled).
+    # 
+    # @param integer options[:view]             Default view ing mode. Either book, slide, bookindex or slideindex.
+    # @param integer options[:subscribe]        Allow subscribers' access. Either 0 (disabled) or 1 (enabled).
+    # @param integer options[:comment]          Comments behaviour. Either 0 (disabled), 1 (moderate all), 2 (moderate all except contacts), 3 (accept only contacts) or 4 (accept all).
+    # @param integer options[:download]         Download behaviour. Either 0 (disabled), 1 (only contacts) or 2 (everyone).
+    # @param integer options[:print]            Print behaviour. Either 0 (disabled), 1 (only contacts) or 2 (everyone).
+    # @param integer options[:annotation_view]  Annotation viewing behaviour. Either 0 (disabled), 1 (only contacts) or 2 (everyone).
+    # @param integer options[:annotation_add]   Annotation adding behaviour. Either 0 (disabled), 1 (only contacts) or 2 (everyone).
+    # @param integer options[:extract]          not yet implemented.
+    # @param integer options[:mini]             Allow MiniCalaméo. Either 0 (disabled) or 1 (enabled).
+    # @param integer options[:adult]            Restrict access to adults. Either 0 (no) or 1 (yes).
+    # @param integer options[:direction]        Reading direction. Either 0 (left-to-right) or 1 (right-to-left "manga mode").
+    # 
+    # @param string  options[:license]          License. Either <empty> (traditionnal copyright) or pd (public domain), by, by_nc, by_nc_nd, by_nc_sa, by_nd or by_sa (Creative Commons).
+    # @param string  options[:skin_url]         Custom skin URL Must be an absolute URL. (see CSML documentation)
+    # @param string  options[:logo_url]         Custom logo URL. Must be an absolute URL.
+    # @param string  options[:logo_link_url]    Custom logo link URL. Must be an absolute URL.
+    # @param string  options[:background_url]   Custom background URL. Must be an absolute URL.
+    # @param integer options[:music]            Background music mode. Either 0 (loop forever), 1 (play only once).
+    # @param string  options[:music_url]        Custom background music URL. Must be an absolute URL.
+    # @param integer options[:sfx]              Play sound effects like page flipping. Either 0 (disabled) or 1 (enabled).
+    # @param string  options[:sfx_url]          Custom page flipping sound URL. Must be an absolute URL.
+    # 
+    # @return [Publication]
+    # 
+    # @see http://www.calameo.com/documentation/skins/index.htm
+    # @see http://www.calameo.com/documentation/api/item-categories.htm
+    # @see http://www.calameo.com/documentation/api/item-formats.htm
+    # @see http://www.calameo.com/documentation/api/item-dialects.htm
+    # @see http://www.calameo.com/documentation/api/api-publishfromtext.htm
+    # Calameo::Publishing.publishFromText
+    api_method :publishFromText, :post, Api::UPLOAD_API_URL, Items::Publication
+    
+    # This action allows you to publish a new revision of a document.
+    #
+    # @param integer  options[:book_id] 	ID of the publication.
+    # @param file     options[:file]      Document to be uploaded (like provided by a HTML form file field).
+    # @return [Publication]
+    # 
+    # @see http://www.calameo.com/documentation/api/api-revise.htm
+    # Calameo::Publishing.revise
+    api_method :revise, :post, Api::UPLOAD_API_URL, Items::Publication
+    
+    # This action allows you to publish a new revision of document from a file available on the internet.
+    #
+    # @param integer  options[:book_id] 	ID of the publication.
+    # @param string   options[:url]       URL of the document to publish.
+    # @return [Publication]
+    # 
+    # @see http://www.calameo.com/documentation/api/api-revisefromurl.htm
+    # Calameo::Publishing.reviseFromUrl
+    api_method :reviseFromUrl, :post, Api::UPLOAD_API_URL, Items::Publication
+    
+    # This action allows you to publish a new revision of document from a file available on the internet.
+    #
+    # @param integer  options[:book_id] 	ID of the publication.
+    # @param string   options[:text]      Text to use as the document content.
+    # @return [Publication]
+    # 
+    # @see http://www.calameo.com/documentation/api/api-revisefromtext.htm
+    # Calameo::Publishing.reviseFromText
+    api_method :reviseFromText, :post, Api::UPLOAD_API_URL, Items::Publication     
   end
   
   class Subscribers
