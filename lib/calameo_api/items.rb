@@ -1,4 +1,3 @@
-require "ostruct"
 module Calameo
   module Items
     class ResponseObject
@@ -160,10 +159,20 @@ module Calameo
       # string 	Text of the comment.
       attr_accessor :text
     end
-    
+    # Subscriber session informations
+    # @see www.calameo.com/documentation/api/item-subscriber-session.htm
+    class Session < ResponseObject
+      # string 	Unique session key.
+      attr_accessor :id
+      # integer 	Unique identifying key of the subscriber subscription.
+      attr_accessor :subscription_id 	
+      # string 	Login of the subscriber.
+      attr_accessor :subscriber_login
+    end
     
     class Publications < ResponseCollectionObject
     end
+    
     class Subscriptions < ResponseCollectionObject
     end
     class Subscribers < ResponseCollectionObject
