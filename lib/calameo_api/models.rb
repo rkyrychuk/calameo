@@ -6,7 +6,7 @@ module Calameo
     api_method :fetchAccountBooks                 #http://www.calameo.com/documentation/api/api-fetchaccountbooks.htm
     api_method :fetchAccountFavorites             #http://www.calameo.com/documentation/api/api-fetchaccountfavorites.htm
     api_method :fetchAccountSubscribers           #http://www.calameo.com/documentation/api/api-fetchaccountsubscribers.htm
-	end
+  end
   
   class Subscriptions
     include Calameo::Base
