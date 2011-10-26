@@ -1,29 +1,34 @@
+require 'osctruct'
 module Calameo
   module Items
-    class ResponseObject
-      def self.create(hash)
-        result = self.new
-        hash.each { |k, v| result.send("#{k}=", v) }
-        result
+    class ResponseObject < OpenStruct
+      @@defs = {}
+      def self.attr_accessor(name, type = nil)
+        @@defs[self] ||= {}
+        @@defs[self][name] = type
+      end
+    
+      def initialize(hash = nil)
+        for k,v in hash
+          type = @@defs[self.class][k.to_sym]
+          hash[k] = type ? type.new(v) : v
+        end if hash
+        super hash
       end
     end
     
     class ResponseCollectionObject < ResponseObject
-      def self.create(hash)
-        item_type = self.to_s.singularize.constantize
-        result = self.new
-        result.total = hash["total"]
-        result.start = hash["start"]
-        result.step = hash["step"]
-        result.items = hash["items"].map {|item| item_type.create(item) }
-        result
-      end
       attr_accessor :total
       attr_accessor :start
       attr_accessor :step
       attr_accessor :items
+      
+      def initialize(hash)
+        super hash
+        item_type = @@defs[self][:items]
+        self.items = self.items.map {|item| item_type.new(item) }
+      end
     end
-    
     # Account Info
     class AccountInfo < ResponseObject
       #integer 	Account’s ID
@@ -171,13 +176,16 @@ module Calameo
     end
     
     class Publications < ResponseCollectionObject
+      attr_accessor :items, Publication
     end
-    
     class Subscriptions < ResponseCollectionObject
+      attr_accessor :items, Subscription
     end
     class Subscribers < ResponseCollectionObject
+      attr_accessor :items, Subscriber
     end
     class Comments < ResponseCollectionObject
+      attr_accessor :items, Comment
     end
   end
 end

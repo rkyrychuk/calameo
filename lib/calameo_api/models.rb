@@ -216,12 +216,12 @@ module Calameo
   class Publishing
     include Calameo::Base
     
-    api_method :publish, :post                    #http://www.calameo.com/documentation/api/api-publish.htm
-    api_method :publishFromUrl, :post             #http://www.calameo.com/documentation/api/api-publishfromurl.htm
-    api_method :publishFromText, :post            #http://www.calameo.com/documentation/api/api-publishfromtext.htm
-    api_method :revise                            #http://www.calameo.com/documentation/api/api-revise.htm
-    api_method :reviseFromUrl                     #http://www.calameo.com/documentation/api/api-revisefromurl.htm
-    api_method :reviseFromText                    #http://www.calameo.com/documentation/api/api-revisefromtext.htm
+#    api_method :publish, :post                    #http://www.calameo.com/documentation/api/api-publish.htm
+#    api_method :publishFromUrl, :post             #http://www.calameo.com/documentation/api/api-publishfromurl.htm
+#    api_method :publishFromText, :post            #http://www.calameo.com/documentation/api/api-publishfromtext.htm
+#    api_method :revise                            #http://www.calameo.com/documentation/api/api-revise.htm
+#    api_method :reviseFromUrl                     #http://www.calameo.com/documentation/api/api-revisefromurl.htm
+#    api_method :reviseFromText                    #http://www.calameo.com/documentation/api/api-revisefromtext.htm
   end
   
   class Subscribers
