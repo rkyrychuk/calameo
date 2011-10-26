@@ -1,4 +1,4 @@
-require 'osctruct'
+require 'ostruct'
 module Calameo
   module Items
     class ResponseObject < OpenStruct

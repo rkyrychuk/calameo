@@ -1,6 +1,4 @@
 require 'digest/md5'
-
-
 module Calameo
   class ApiException < StandardError
     attr_accessor :code
