@@ -15,8 +15,10 @@ module Calameo
     # Send post
     def post(api_url, params)
       url = create_url(api_url, {})
-      data = {}
+
       if params.values.any? {|v| v.respond_to?(:read) }
+        data = {}
+
         params.each do |k, v|
           if v.respond_to?(:read)
             data[k] = UploadIO.new(v, content_type(v.path), Pathname.new(v.path).basename.to_s)
@@ -28,8 +30,9 @@ module Calameo
         req = Net::HTTP::Post::Multipart.new(url.path, data)
       else
         req = Net::HTTP::Post.new(url.path)
-        req.set_form_data(data)
+        req.set_form_data(params)
       end
+
       response = Net::HTTP.start(url.host, url.port) do |http|
         http.request(req)
       end
